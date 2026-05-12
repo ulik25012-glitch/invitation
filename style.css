@@ -1,0 +1,196 @@
+/* --- ЗМІННІ ТА БАЗОВІ НАЛАШТУВАННЯ --- */
+:root {
+    --bg-color: #121212;
+    --accent-color: #d4af37;
+    --text-main: #ffffff;
+    --text-dark: #333333;
+    --envelope-color: #e0d5c1;
+    --envelope-flap: #d1c5b0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-main);
+    min-height: 200vh; /* Для детекту скролу */
+    overflow-x: hidden;
+}
+
+/* --- СУЧАСНИЙ ФОН З 3 ФОТО ТА М'ЯКИМИ ПЕРЕХОДАМИ --- */
+.bg-photo-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -2;
+    background: #000;
+    will-change: filter; /* Оптимізація для анімації замилювання */
+}
+
+.bg-photo {
+    position: absolute;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Центральне фото (canvas.png) */
+.bg-photo.center {
+    left: 25%; 
+    width: 50%; 
+    background-image: url('canvas.png');
+    z-index: 1; /* Найнижчий шар фону */
+}
+
+/* Ліве фото (canvas2.png) */
+.bg-photo.left {
+    left: 0;
+    width: 38%; 
+    background-image: url('canvas2.png');
+    /* МАГІЯ: вужчий і плавний перехід (починається з 85%) */
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    z-index: 2; /* Лежить над центральним */
+}
+
+/* Праве фото (canvas3.png) */
+.bg-photo.right {
+    right: 0;
+    width: 38%; 
+    background-image: url('canvas3.png');
+    /* МАГІЯ: вужчий і плавний перехід (починається з 85%) */
+    -webkit-mask-image: linear-gradient(to left, black 85%, transparent 100%);
+    mask-image: linear-gradient(to left, black 85%, transparent 100%);
+    z-index: 2; /* Лежить над центральним */
+}
+
+/* Адаптивність для телефонів (показуємо тільки центральне фото) */
+@media (max-width: 768px) {
+    .bg-photo.left, 
+    .bg-photo.right { 
+        display: none; 
+    }
+    .bg-photo.center { 
+        left: 0; 
+        width: 100%; 
+    }
+}
+
+/* --- ФІКСОВАНА ВІДЦЕНТРОВАНА СЕКЦІЯ З КОНВЕРТОМ --- */
+.hero-section { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    opacity: 0; 
+    transition: opacity 0.3s ease-out; 
+    z-index: 1; 
+    pointer-events: none; 
+}
+
+.hero-section.revealed { pointer-events: all; }
+.scroll-trigger-container { position: relative; z-index: 0; }
+.spacer { height: 100vh; }
+.spacer-bottom { height: 100vh; }
+
+/* --- СТРІЛОЧКА-ПІДСКАЗКА --- */
+.scroll-hint { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; transition: opacity 0.8s ease; z-index: 10; pointer-events: none; }
+.scroll-hint span { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; color: var(--accent-color); text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+.arrow { width: 20px; height: 20px; border-right: 2px solid var(--accent-color); border-bottom: 2px solid var(--accent-color); transform: rotate(45deg); animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(45deg); } 40% { transform: translateY(-10px) rotate(45deg); } 60% { transform: translateY(-5px) rotate(45deg); } }
+
+/* --- ІНШІ СТИЛІ --- */
+.hint { font-size: 0.9rem; color: var(--accent-color); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; animation: pulse 2s infinite; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+@keyframes pulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } }
+
+.envelope-wrapper { perspective: 1500px; width: 320px; height: 210px; position: relative; cursor: pointer; margin: 0 auto; }
+.envelope { width: 100%; height: 100%; position: absolute; background: var(--envelope-color); border-radius: 5px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+.flap { position: absolute; width: 100%; height: 100%; z-index: 3; }
+.front-flap { border-left: 160px solid var(--envelope-flap); border-right: 160px solid var(--envelope-flap); border-bottom: 105px solid #c0b39c; border-top: 105px solid transparent; pointer-events: none; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; }
+.top-flap { border-top: 120px solid var(--envelope-color); border-left: 160px solid transparent; border-right: 160px solid transparent; border-bottom: 90px solid transparent; transform-origin: top; transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), z-index 0s 0.3s; z-index: 4; }
+
+.letter { position: absolute; bottom: 2%; left: 4%; width: 92%; height: 96%; background: #fff; color: var(--text-dark); z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 4px; transform-origin: bottom center; container-type: size; container-name: letter; padding: 6cqh 4cqw; box-sizing: border-box; overflow-y: auto; overflow-x: hidden; }
+.letter::-webkit-scrollbar { width: 4px; }
+.letter::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 4px; }
+
+/* --- СТИЛІ ТЕКСТУ В ЛИСТІ (ЗБІЛЬШЕНІ ДЛЯ МОБІЛЬНИХ) --- */
+.letter h2 { 
+    font-size: 14cqh; 
+    color: var(--accent-color); 
+    margin-bottom: 5cqh; 
+    text-align: center; 
+    font-weight: 600; 
+    width: 100%; 
+    line-height: 1.2; 
+}
+
+.invite-text { 
+    font-size: 8cqh; 
+    line-height: 1.4; 
+    text-align: center; 
+    margin-bottom: 6cqh; 
+    width: 100%; 
+}
+
+.details { 
+    font-size: 7cqh; 
+    border-top: 1px solid #eee; 
+    padding-top: 4cqh; 
+    margin-bottom: 5cqh; 
+    width: 100%; 
+    text-align: center; 
+}
+
+.details p { margin: 2cqh 0; }
+.details a { color: var(--accent-color); text-decoration: underline; font-weight: 600; }
+.time-hint { font-size: 5cqh; color: #888; } 
+
+.letter-actions { display: flex; opacity: 0; transition: opacity 0.3s ease; justify-content: center; width: 100%; }
+
+.btn { 
+    padding: 4cqh 8cqw; 
+    font-family: inherit; 
+    font-size: 7cqh; 
+    font-weight: 600; 
+    cursor: pointer; 
+    border: none; 
+    border-radius: 4px; 
+    background: var(--accent-color); 
+    color: #fff; 
+    transition: transform 0.2s, box-shadow 0.2s; 
+    white-space: nowrap; 
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); }
+
+/* --- АНІМАЦІЇ КОНВЕРТА --- */
+.envelope-wrapper.open .top-flap { transform: rotateX(180deg); z-index: 1; transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), z-index 0s 0.2s; }
+.envelope-wrapper.open .letter { animation: popOutAndOver 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; animation-delay: 0.25s; }
+@keyframes popOutAndOver { 0% { transform: translateY(0) scale(1); z-index: 2; } 40% { transform: translateY(-110%) scale(0.95); z-index: 2; } 41% { transform: translateY(-110%) scale(0.95); z-index: 5; } 100% { transform: translateY(-15%) scale(1.05); z-index: 5; } }
+.envelope-wrapper.open .letter-actions { opacity: 1; transition-delay: 1.2s; }
+.envelope-wrapper.closing .letter { animation: popInAndBehind 0.7s cubic-bezier(0.42, 0, 0.58, 1) forwards; }
+@keyframes popInAndBehind { 0% { transform: translateY(-15%) scale(1.05); z-index: 5; } 40% { transform: translateY(-110%) scale(0.95); z-index: 5; } 41% { transform: translateY(-110%) scale(0.95); z-index: 2; } 100% { transform: translateY(0) scale(1); z-index: 2; } }
+.envelope-wrapper.closing .top-flap { transform: rotateX(0deg); z-index: 4; transition: transform 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0.7s, z-index 0s 0.7s; }
+
+/* --- АДАПТИВНІСТЬ ДЛЯ ПК ТА НОУТБУКІВ --- */
+@media (min-width: 768px) { 
+    .envelope-wrapper { width: 480px; height: 300px; } 
+    .front-flap { border-left-width: 240px; border-right-width: 240px; border-bottom-width: 150px; border-top-width: 150px; } 
+    .top-flap { border-top-width: 170px; border-left-width: 240px; border-right-width: 240px; border-bottom-width: 130px; } 
+
+    /* Повертаємо компактні розміри шрифтів для великих екранів */
+    .letter h2 { font-size: 9cqh; margin-bottom: 4cqh; }
+    .invite-text { font-size: 6cqh; margin-bottom: 5cqh; }
+    .details { font-size: 5cqh; padding-top: 3cqh; margin-bottom: 4cqh; }
+    .details p { margin: 1.5cqh 0; }
+    .time-hint { font-size: 3.5cqh; }
+    .btn { font-size: 5.5cqh; padding: 3cqh 6cqw; }
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наше Весілля</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-photo-container" id="bg-photo-container">
+        <div class="bg-photo center"></div>
+        <div class="bg-photo left"></div>
+        <div class="bg-photo right"></div>
+    </div>
+
+    <div class="scroll-hint" id="scroll-hint">
+        <span>Горни вниз</span>
+        <div class="arrow"></div>
+    </div>
+
+    <section class="hero-section" id="hero-section-fixed">
+        <p class="hint">Натисни на конверт</p>
+        <div class="envelope-wrapper" id="envelope-wrapper">
+            <div class="envelope" id="envelope">
+                <div class="flap front-flap"></div>
+                <div class="flap top-flap"></div>
+                
+                <div class="letter" id="letter">
+                    <h2 id="guest-name">Любі гості!</h2>
+                    <p class="invite-text">Ми кажемо "Так" одне одному і запрошуємо вас стати свідками цієї щасливої події.</p>
+                    <div class="details">
+                        <p><strong>Дата:</strong> 12 серпня 2026</p>
+                        <p><strong>Час:</strong> орієнтовно 13:00</p>
+                        <p><strong>Місце:</strong> <a href="#" target="_blank">Назва локації</a></p>
+                    </div>
+                    <div class="letter-actions">
+                        <button id="close-btn" class="btn">Сховати</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container scroll-trigger-container">
+        <div class="spacer"></div>
+        <div class="spacer-bottom"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
