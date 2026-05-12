@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (window.scrollY < 10) { 
             scrollHint.style.opacity = "1"; 
         } 
-    }, 5000);
+    }, 1000);
 
     // --- 2. ЛОГІКА СКРОЛУ ---
     window.addEventListener('scroll', () => {
