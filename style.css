@@ -122,11 +122,11 @@ body {
 .letter::-webkit-scrollbar { width: 4px; }
 .letter::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 4px; }
 
-/* --- СТИЛІ ТЕКСТУ В ЛИСТІ (ЗБІЛЬШЕНІ ДЛЯ МОБІЛЬНИХ) --- */
+/* --- СТИЛІ ТЕКСТУ В ЛИСТІ (ОПТИМІЗОВАНІ ДЛЯ МОБІЛЬНИХ) --- */
 .letter h2 { 
-    font-size: 14cqh; 
+    font-size: 10cqh; 
     color: var(--accent-color); 
-    margin-bottom: 5cqh; 
+    margin-bottom: 3cqh; 
     text-align: center; 
     font-weight: 600; 
     width: 100%; 
@@ -134,32 +134,32 @@ body {
 }
 
 .invite-text { 
-    font-size: 8cqh; 
+    font-size: 6cqh; 
     line-height: 1.4; 
     text-align: center; 
-    margin-bottom: 6cqh; 
+    margin-bottom: 4cqh; 
     width: 100%; 
 }
 
 .details { 
-    font-size: 7cqh; 
+    font-size: 5cqh; 
     border-top: 1px solid #eee; 
-    padding-top: 4cqh; 
-    margin-bottom: 5cqh; 
+    padding-top: 3cqh; 
+    margin-bottom: 4cqh; 
     width: 100%; 
     text-align: center; 
 }
 
-.details p { margin: 2cqh 0; }
+.details p { margin: 1.5cqh 0; }
 .details a { color: var(--accent-color); text-decoration: underline; font-weight: 600; }
-.time-hint { font-size: 5cqh; color: #888; } 
+.time-hint { font-size: 4cqh; color: #888; } 
 
-.letter-actions { display: flex; opacity: 0; transition: opacity 0.3s ease; justify-content: center; width: 100%; }
+.letter-actions { display: flex; opacity: 0; transition: opacity 0.3s ease; justify-content: center; width: 100%; margin-bottom: 2cqh; }
 
 .btn { 
-    padding: 4cqh 8cqw; 
+    padding: 3cqh 6cqw; 
     font-family: inherit; 
-    font-size: 7cqh; 
+    font-size: 5cqh; 
     font-weight: 600; 
     cursor: pointer; 
     border: none; 
@@ -174,10 +174,24 @@ body {
 /* --- АНІМАЦІЇ КОНВЕРТА --- */
 .envelope-wrapper.open .top-flap { transform: rotateX(180deg); z-index: 1; transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), z-index 0s 0.2s; }
 .envelope-wrapper.open .letter { animation: popOutAndOver 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; animation-delay: 0.25s; }
-@keyframes popOutAndOver { 0% { transform: translateY(0) scale(1); z-index: 2; } 40% { transform: translateY(-110%) scale(0.95); z-index: 2; } 41% { transform: translateY(-110%) scale(0.95); z-index: 5; } 100% { transform: translateY(-15%) scale(1.05); z-index: 5; } }
+
+@keyframes popOutAndOver { 
+    0% { transform: translateY(0) scale(1); z-index: 2; } 
+    40% { transform: translateY(-110%) scale(0.95); z-index: 2; } 
+    41% { transform: translateY(-110%) scale(0.95); z-index: 5; } 
+    100% { transform: translateY(-25%) scale(1.1); z-index: 5; } 
+}
+
 .envelope-wrapper.open .letter-actions { opacity: 1; transition-delay: 1.2s; }
 .envelope-wrapper.closing .letter { animation: popInAndBehind 0.7s cubic-bezier(0.42, 0, 0.58, 1) forwards; }
-@keyframes popInAndBehind { 0% { transform: translateY(-15%) scale(1.05); z-index: 5; } 40% { transform: translateY(-110%) scale(0.95); z-index: 5; } 41% { transform: translateY(-110%) scale(0.95); z-index: 2; } 100% { transform: translateY(0) scale(1); z-index: 2; } }
+
+@keyframes popInAndBehind { 
+    0% { transform: translateY(-25%) scale(1.1); z-index: 5; } 
+    40% { transform: translateY(-110%) scale(0.95); z-index: 5; } 
+    41% { transform: translateY(-110%) scale(0.95); z-index: 2; } 
+    100% { transform: translateY(0) scale(1); z-index: 2; } 
+}
+
 .envelope-wrapper.closing .top-flap { transform: rotateX(0deg); z-index: 4; transition: transform 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0.7s, z-index 0s 0.7s; }
 
 /* --- АДАПТИВНІСТЬ ДЛЯ ПК ТА НОУТБУКІВ --- */
@@ -186,7 +200,7 @@ body {
     .front-flap { border-left-width: 240px; border-right-width: 240px; border-bottom-width: 150px; border-top-width: 150px; } 
     .top-flap { border-top-width: 170px; border-left-width: 240px; border-right-width: 240px; border-bottom-width: 130px; } 
 
-    /* Повертаємо компактні розміри шрифтів для великих екранів */
+    /* Компактні розміри шрифтів для великих екранів */
     .letter h2 { font-size: 9cqh; margin-bottom: 4cqh; }
     .invite-text { font-size: 6cqh; margin-bottom: 5cqh; }
     .details { font-size: 5cqh; padding-top: 3cqh; margin-bottom: 4cqh; }
