@@ -25,7 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const guestId = urlParams.get('g'); 
     const guestNameElement = document.getElementById('guest-name');
     if (guestId && guests[guestId]) { 
-        guestNameElement.textContent = guests[guestId]; 
+        // Використовуємо innerHTML та replace для заміни \n на <br>
+        guestNameElement.innerHTML = guests[guestId].replace(/\n/g, "<br>"); 
     }
 
     // --- 1. ТАЙМЕР ДЛЯ СТРІЛОЧКИ (5 секунд) ---
